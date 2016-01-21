@@ -14,8 +14,8 @@
 extern  void * get_log( char * file,char * function, int line,bool isdelete,void * p);
 extern  void   get_log_pre( char * file,char * function, int line);
 
-#define new new
-#define delete delete
+#undef new
+#undef delete
 
 void *  operator new(std::size_t _Count , char * file,char * function, int line ) 
 {
@@ -41,6 +41,42 @@ void operator delete[](void * object )
 	get_log(g_log_pre.delete_filename, g_log_pre.delete_function, g_log_pre.delete_line, true, object );
 
 }
+
+
+
+void operator  delete( void * object, char * file,char * function, int line)
+{
+	 operator delete(object);
+}
+
+void operator delete[](void * object , char * file,char * function, int line)
+{
+	operator delete[](object);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,8 +120,6 @@ void operator delete[](void * object )
 
 
 
-#undef delete
-#undef new
 
 
 

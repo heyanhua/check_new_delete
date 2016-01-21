@@ -27,6 +27,9 @@ COperatorNewCountInfo::COperatorNewCountInfo(void)
 	m_vInfo.resize(128);
 	m_vInfo.clear();
 	int temp = (m_vInfo.begin() == m_vInfo.end());
+
+	_NewCount =0;
+	_DeleteCount =0;
 }
 
 
@@ -35,6 +38,7 @@ void  COperatorNewCountInfo::WriteLog(const stc_log_info & obj)
 	if(true != obj.isdelete)
 	{
 		m_vInfo.push_back(obj);
+		_NewCount ++;
 		return ;
 	}
 	stc_log_info  objTmp;
@@ -59,6 +63,9 @@ void  COperatorNewCountInfo::WriteLog(const stc_log_info & obj)
 			memcpy(it->new_filename,objTmp.new_filename, sizeof(objTmp.new_filename));
 			memcpy(it->new_function,objTmp.new_function, sizeof(objTmp.new_function));
 			it->new_line = objTmp.new_line;
+
+
+			_DeleteCount ++;
 			break;
 		}
 
@@ -84,11 +91,23 @@ COperatorNewCountInfo::~COperatorNewCountInfo(void)
 }
 
 
+int COperatorNewCountInfo::GetNewCount()
+{
+	return _NewCount;
+}
+int COperatorNewCountInfo::GetDeleteCount()
+{
+	return _DeleteCount;
+}
+
+
 ofstream&  operator <<(ofstream &ofs, COperatorNewCountInfo & obj)
 {
-	int num=0, index = 0;
+	int temp = obj.GetDeleteCount() - obj.GetNewCount(), index =0;
 	ofs<<"---------------------------------------------------"<<std::endl;
-	ofs<<"检测内存泄漏情况如下:"<<endl;
+	ofs<<"统计到new"<<obj.GetNewCount()<<"次"<<"delete"<<obj.GetDeleteCount()<<"次."<<endl;
+	if(temp)
+		ofs<<"泄漏内存"<<temp<<"次"<<std::endl;
 	
 	for(vector<stc_log_info>::iterator it = obj.m_vInfo.begin(); it<obj.m_vInfo.end();it++ )
 	{

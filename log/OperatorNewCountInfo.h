@@ -46,7 +46,12 @@ public:
 	~COperatorNewCountInfo(void);
 	void WriteLog(const stc_log_info & obj);
 	friend  ofstream&  operator <<(ofstream &ofs, COperatorNewCountInfo & obj);
+
+	int GetNewCount();
+	int GetDeleteCount();
 private:
+	int _NewCount;
+	int _DeleteCount;
 	vector<_stc_log_info> m_vInfo;
 
 };
