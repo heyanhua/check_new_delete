@@ -1,26 +1,26 @@
 update:		20:31 2016/1/16
 
-#����ԭ�� ʹ�ñ�Դ�����ģ����ʹ��new delete ʱ�� ����ִ������档
-1. ������δƥ�䵽new ���������ذ汾��Ӧ�� delete�汾�����ֵĴ������档
-2. ����#undef new ��λ�ã� ���پ��档
-3. ��ǰ�汾���Ҳ��Ի�win7 x64, vs 2012�������������κξ��档
+#更新原因， 使用本源码后在模版中使用new delete 时， 会出现大量警告。
+1. 完善因未匹配到new 的两个重载版本对应的 delete版本而出现的大量警告。
+2. 调整#undef new 的位置， 减少警告。
+3. 当前版本在我测试机win7 x64, vs 2012运行正常，无任何警告。
 
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#log����:
-  !�ڴ�й©ͳ�ơ� ����_debug�꿪��,Ĭ��release�汾���Ὺ����
+#log功能:
+  !内存泄漏统计。 引用_debug宏开关,默认release版本不会开启。
 
-#ʹ�÷�ʽ:
-1. ����log�ļ��е�Դ�ļ�Ŀ¼��
-2. ��OperatorNewCountInfo.cpp  ��  check_newdelete_log.cpp����Ŀ�б��롣
-3. ��check_newdelete_log.h ���ӵ�ÿһ��cpp�ļ�ͷ���������ӽ���stdafx.h��ͷ�ļ���
-4. ÿ�����н�������Դ�ļ�Ŀ¼�ҵ�ͳ����Ϣmem_log.txt
+#使用方式:
+1. 添加log文件夹到源文件目录。
+2. 将OperatorNewCountInfo.cpp  和  check_newdelete_log.cpp在项目中编译。
+3. 将check_newdelete_log.h 添加到每一个cpp文件头，或者添加进“stdafx.h”头文件。
+4. 每次运行结束后在源文件目录找到统计信息mem_log.txt
 
-#ע��:
-1. ÿͳ��һ��new��delete��Ϣ��������Ҫ���������ڴ�512�ֽڣ�ע���ڴ����ġ�
-2. Ӧ����ʲôʱ��ʹ���ڴ�ͳ��?��ò�ʹ�á� ����һ�����õ�new  delete���ϰ�߿��ܸ��á�
+#注意:
+ 每统计一次new和delete信息，至少需要额外消耗内存512字节，注意内存消耗。
 
 
-#����bug����ϵ:heyanhua
+
+
 
 
